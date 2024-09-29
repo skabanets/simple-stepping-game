@@ -1,4 +1,5 @@
 import { FC, useCallback } from 'react';
+import { toast } from 'react-toastify';
 
 interface InputFileProps {
   title: string;
@@ -20,6 +21,10 @@ export const InputFile: FC<InputFileProps> = ({ title, setImage }) => {
           setImage(result);
           localStorage.setItem('game-area', result);
         }
+      };
+
+      reader.onerror = () => {
+        toast.error('Failed to read the file');
       };
 
       reader.readAsDataURL(file);
