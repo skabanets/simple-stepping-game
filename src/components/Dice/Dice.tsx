@@ -19,7 +19,7 @@ export const Dice: FC<DiceProps> = ({ faceColor, dotColor, setDiceValue }) => {
   };
 
   return (
-    <div className="flex flex-col gap-8 items-center">
+    <>
       <div className="cursor-pointer">
         <ReactDice
           defaultRoll={3}
@@ -35,6 +35,6 @@ export const Dice: FC<DiceProps> = ({ faceColor, dotColor, setDiceValue }) => {
       <Button className="roll-btn" type="button" onClick={handleRollClick}>
         Roll dice
       </Button>
-    </div>
+    </>
   );
 };
