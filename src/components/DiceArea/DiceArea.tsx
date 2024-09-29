@@ -40,7 +40,7 @@ export const DiceArea: FC<DiceAreaProps> = ({ setDiceValue }) => {
 
   return (
     <div className="border border-black rounded-md flex flex-col items-center justify-between h-1/2 py-8 px-5">
-      <div className="flex flex-col gap-1 items-end w-full">
+      <div className="flex flex-col gap-1 items-end w-full font-semibold">
         <label className="flex justify-between w-[140px]">
           Face color{' '}
           <input type="color" name="" id="" onChange={handleFaceColorChange} value={faceColor} />

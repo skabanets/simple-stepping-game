@@ -1,5 +1,6 @@
 import { FC, useRef } from 'react';
 import ReactDice, { ReactDiceRef } from 'react-dice-complete';
+
 import { Button } from '../../components';
 
 interface DiceProps {
@@ -20,7 +21,7 @@ export const Dice: FC<DiceProps> = ({ faceColor, dotColor, setDiceValue }) => {
 
   return (
     <>
-      <div className="cursor-pointer">
+      <div className="cursor-pointer hover:scale-110 transition duration-300">
         <ReactDice
           defaultRoll={3}
           numDice={1}
