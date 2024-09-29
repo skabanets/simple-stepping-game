@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.roll-btn {
+  @apply bg-[#0B63F6] text-white border-2 border-white font-semibold py-2 h-12 w-[150px] rounded-lg hover:bg-white hover:text-[#0B63F6]  hover:border-[#0B63F6] focus-visible:bg-white focus-visible:text-[#0B63F6]  focus-visible:border-[#0B63F6] transition duration-300;
+}
