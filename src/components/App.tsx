@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { DiceArea, GameArea, SettingsArea } from '../components';
 
 export const App = () => {
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(localStorage.getItem('game-area') || null);
 
   return (
     <div className="flex gap-4 p-5 h-screen">

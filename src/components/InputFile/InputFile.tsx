@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 
 interface InputFileProps {
   title: string;
@@ -6,18 +6,26 @@ interface InputFileProps {
 }
 
 export const InputFile: FC<InputFileProps> = ({ title, setImage }) => {
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const file = event.target.files[0];
+  const handleFileChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+
+      if (!file) return;
+
       const reader = new FileReader();
+
       reader.onload = () => {
-        if (reader.result) {
-          setImage(reader.result as string);
+        const result = reader.result as string | null;
+        if (result) {
+          setImage(result);
+          localStorage.setItem('game-area', result);
         }
       };
+
       reader.readAsDataURL(file);
-    }
-  };
+    },
+    [setImage]
+  );
 
   return (
     <div className="flex flex-col gap-2">
