@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { InputFile } from '../../components';
+import { InputFile, PlayersField } from '../../components';
 
 interface SettingsAreaProps {
   setImage: (image: string | null) => void;
@@ -14,7 +14,7 @@ export const SettingsArea: FC<SettingsAreaProps> = ({ setImage }) => {
           <InputFile title="Background image" setImage={setImage} />
         </li>
         <li>
-          <p>Start</p>
+          <PlayersField />
         </li>
       </ol>
     </div>
