@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
+
 import { Button } from '../../components';
 
 const players = ['2', '3', '4', '5'];
 
-export const PlayersField = () => {
+interface PlayersFieldProps {
+  handleSetPlayers: (value: number) => void;
+}
+export const PlayersField: FC<PlayersFieldProps> = ({ handleSetPlayers }) => {
   const [playersQuantity, setPlayersQuantity] = useState(localStorage.getItem('players') || '2');
 
   const handlePlayersChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -12,9 +16,13 @@ export const PlayersField = () => {
     localStorage.setItem('players', selectedPlayers);
   };
 
+  const handleApply = () => {
+    handleSetPlayers(Number(playersQuantity));
+  };
+
   return (
     <div className="flex flex-col gap-2">
-      <label className="font-semibold">Chose quantity of players and press Apply</label>
+      <label className="font-semibold">Chose number of players and press Apply</label>
       <div className="flex gap-4">
         <select
           name="players"
@@ -28,7 +36,7 @@ export const PlayersField = () => {
             </option>
           ))}
         </select>
-        <Button type="button" className="w-1/3 apply-btn">
+        <Button type="button" className="w-1/3 apply-btn" onClick={handleApply}>
           Apply
         </Button>
       </div>
