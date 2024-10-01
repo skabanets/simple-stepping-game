@@ -2,6 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 
 import type { Piece } from '../../types';
+import { shuffleArray } from '../../helpers';
+import { pieceImages } from '../../constants/pieceImages';
 
 interface GameAreaProps {
   image: string | null;
@@ -20,11 +22,13 @@ export const GameArea: FC<GameAreaProps> = ({ image, playersQuantity }) => {
 
   useEffect(() => {
     if (playersQuantity !== null) {
+      const shuffledImages = shuffleArray(pieceImages).slice(0, playersQuantity);
+
       const initialPieces = Array.from({ length: playersQuantity }, (_, i) => ({
         id: String(i + 1),
         x: 0,
-        y: i * 20,
-        content: String(i + 1),
+        y: i * 40,
+        content: shuffledImages[i]?.src || '',
       }));
       setPieces(initialPieces);
     }
@@ -46,18 +50,28 @@ export const GameArea: FC<GameAreaProps> = ({ image, playersQuantity }) => {
   return (
     <div className="relative border border-black rounded-md flex justify-center items-center w-3/4">
       <div className="h-full">
-        {image && <img src={image} alt="game-area" className="h-full" />}
+        {image && <img src={image} alt="game-area" className="h-full opacity-80" />}
       </div>
       {pieces && (
-        <div className={`absolute top-0 left-0 w-[200px]`}>
+        <div className={`absolute top-10 left-2 w-[200px]`}>
           {pieces.map(piece => (
             <Draggable
               key={piece.id}
               position={{ x: piece.x, y: piece.y }}
               onStop={(e, data) => handleDrag(e, data, piece.id)}
             >
-              <div className="size-10 bg-blue-400 rounded-lg flex items-center justify-center cursor-pointer text-white font-semibold">
-                {piece.content}
+              <div
+                className="size-20 flex items-center justify-center cursor-pointer text-white font-semibold"
+                style={{
+                  backgroundImage: `url(${piece.content})`,
+                  backgroundSize: 'contain',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                }}
+              >
+                <p className="absolute text-white font-semibold text-sm -top-8 p-1 bg-blue-400 shadow-sm rounded-md opacity-80">
+                  Player {piece.id}
+                </p>
               </div>
             </Draggable>
           ))}
