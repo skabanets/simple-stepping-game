@@ -3,21 +3,20 @@ import ReactDice, { ReactDiceRef } from 'react-dice-complete';
 
 import { Button } from '../../components';
 import { useLocalStorage } from '../../hooks';
+import { defaulutDice } from '../../constants';
 
 interface DiceProps {
   faceColor: string;
   dotColor: string;
-  setDiceValue: (value: number) => void;
 }
-export const Dice: FC<DiceProps> = ({ faceColor, dotColor, setDiceValue }) => {
-  const [diceValue] = useLocalStorage<number>('dice-value', 3);
-  const [volume, setVolume] = useLocalStorage<number>('volume', 0.5);
+export const Dice: FC<DiceProps> = ({ faceColor, dotColor }) => {
+  const [dice, setDice] = useLocalStorage('dice', defaulutDice);
 
   const reactDice = useRef<ReactDiceRef>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const rollDone = (totalValue: number) => {
-    setDiceValue(totalValue);
+    setDice(prev => ({ ...prev, value: totalValue }));
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -33,18 +32,19 @@ export const Dice: FC<DiceProps> = ({ faceColor, dotColor, setDiceValue }) => {
 
   const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseFloat(event.target.value);
-    setVolume(newVolume);
+    setDice(prev => ({ ...prev, volume: newVolume }));
 
     if (audioRef.current) {
       audioRef.current.volume = newVolume;
     }
   };
 
+  const { value, volume } = dice;
   return (
     <>
       <ReactDice
         disableIndividual
-        defaultRoll={diceValue}
+        defaultRoll={value}
         numDice={1}
         ref={reactDice}
         rollDone={rollDone}

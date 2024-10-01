@@ -2,22 +2,20 @@ import { FC } from 'react';
 
 import { Dice } from '../../components';
 import { useLocalStorage } from '../../hooks';
+import { defaulutDice } from '../../constants';
 
-interface DiceAreaProps {
-  setDiceValue: (value: number) => void;
-}
+export const DiceArea: FC = () => {
+  const [dice, setDice] = useLocalStorage('dice', defaulutDice);
 
-export const DiceArea: FC<DiceAreaProps> = ({ setDiceValue }) => {
-  const [faceColor, setFaceColor] = useLocalStorage<string>('faceColor', '#eb1818');
-  const [dotColor, setDotColor] = useLocalStorage<string>('dotColor', '#ffffff');
-
-  const handleFaceColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFaceColor(event.target.value);
+  const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setDice(prev => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleDotColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDotColor(event.target.value);
-  };
+  const { faceColor, dotColor } = dice;
 
   return (
     <div className="relative border border-black rounded-md flex flex-col items-center justify-between h-1/2 py-8 px-5 font-semibold">
@@ -25,23 +23,25 @@ export const DiceArea: FC<DiceAreaProps> = ({ setDiceValue }) => {
         <label className="flex justify-between w-[140px] ">
           Face color{' '}
           <input
+            name="faceColor"
             className="border-2 border-slate-300 rounded-md"
             type="color"
-            onChange={handleFaceColorChange}
+            onChange={handleColorChange}
             value={faceColor}
           />
         </label>
         <label className="flex justify-between w-[140px]">
           Dot color{' '}
           <input
+            name="dotColor"
             className="border-2 border-slate-300 rounded-md"
             type="color"
-            onChange={handleDotColorChange}
+            onChange={handleColorChange}
             value={dotColor}
           />
         </label>
       </div>
-      <Dice setDiceValue={setDiceValue} faceColor={faceColor} dotColor={dotColor} />
+      <Dice faceColor={faceColor} dotColor={dotColor} />
     </div>
   );
 };
