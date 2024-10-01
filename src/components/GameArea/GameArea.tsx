@@ -1,9 +1,10 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 
 import type { Piece } from '../../types';
 import { shuffleArray } from '../../helpers';
 import { pieceImages } from '../../constants/pieceImages';
+import { useLocalStorage } from '../../hooks';
 
 interface GameAreaProps {
   image: string | null;
@@ -11,14 +12,7 @@ interface GameAreaProps {
 }
 
 export const GameArea: FC<GameAreaProps> = ({ image, playersQuantity }) => {
-  const [pieces, setPieces] = useState<Piece[] | null>(null);
-
-  useEffect(() => {
-    const savedPieces = localStorage.getItem('pieces');
-    if (savedPieces) {
-      setPieces(JSON.parse(savedPieces));
-    }
-  }, []);
+  const [pieces, setPieces] = useLocalStorage<Piece[] | null>('pieces', null);
 
   useEffect(() => {
     if (playersQuantity !== null) {
@@ -32,13 +26,7 @@ export const GameArea: FC<GameAreaProps> = ({ image, playersQuantity }) => {
       }));
       setPieces(initialPieces);
     }
-  }, [playersQuantity]);
-
-  useEffect(() => {
-    if (pieces) {
-      localStorage.setItem('pieces', JSON.stringify(pieces));
-    }
-  }, [pieces]);
+  }, [playersQuantity, setPieces]);
 
   const handleDrag = (_e: DraggableEvent, data: DraggableData, id: string) => {
     setPieces(prev => {
