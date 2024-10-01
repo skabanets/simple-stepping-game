@@ -27,7 +27,7 @@ export const GameArea: FC<GameAreaProps> = ({ image, playersQuantity }) => {
       const initialPieces = Array.from({ length: playersQuantity }, (_, i) => ({
         id: String(i + 1),
         x: 0,
-        y: i * 40,
+        y: (i + 1) * 40,
         content: shuffledImages[i]?.src || '',
       }));
       setPieces(initialPieces);
@@ -61,12 +61,13 @@ export const GameArea: FC<GameAreaProps> = ({ image, playersQuantity }) => {
         )}
       </div>
       {pieces && (
-        <div className={`absolute top-10 left-2 w-[200px]`}>
+        <div className={`absolute inset-0`}>
           {pieces.map(piece => (
             <Draggable
               key={piece.id}
               position={{ x: piece.x, y: piece.y }}
               onStop={(e, data) => handleDrag(e, data, piece.id)}
+              bounds="parent"
             >
               <div
                 className="size-20 flex items-center justify-center cursor-pointer text-white font-semibold"
