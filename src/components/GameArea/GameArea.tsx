@@ -50,7 +50,15 @@ export const GameArea: FC<GameAreaProps> = ({ image, playersQuantity }) => {
   return (
     <div className="relative border border-black rounded-md flex justify-center items-center w-3/4">
       <div className="h-full">
-        {image && <img src={image} alt="game-area" className="h-full opacity-80" />}
+        {image ? (
+          <img src={image} alt="game-area" className="h-full opacity-80" />
+        ) : (
+          <div className="flex justify-center items-center h-full">
+            <h1 className="w-3/5 text-2xl text-center text-slate-600">
+              To start the game, please upload the game area and select the number of participants.
+            </h1>
+          </div>
+        )}
       </div>
       {pieces && (
         <div className={`absolute top-10 left-2 w-[200px]`}>
