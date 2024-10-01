@@ -6,6 +6,6 @@
   @apply bg-[#0B63F6] text-white border-2 border-white font-semibold py-2 h-12 w-[150px] rounded-lg hover:bg-white hover:text-[#0B63F6]  hover:border-[#0B63F6] focus-visible:bg-white focus-visible:text-[#0B63F6] focus-visible:border-[#0B63F6] transition duration-300;
 }
 
-.apply-btn {
-  @apply font-semibold py-1 h-10 transition duration-300 bg-slate-300 text-gray-600 hover:bg-slate-400 rounded-md shadow-md;
+.players-btn {
+  @apply font-semibold py-1 h-10 transition duration-300  rounded-md shadow-md text-white;
 }
