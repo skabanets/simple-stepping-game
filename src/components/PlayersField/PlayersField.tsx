@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 
 import { Button } from '../../components';
 
-const players = ['2', '3', '4', '5'];
+import { players } from '../../constants';
 
 interface PlayersFieldProps {
   handleSetPlayers: (value: number) => void;
