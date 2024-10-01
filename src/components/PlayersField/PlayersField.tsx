@@ -1,19 +1,19 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 import { Button } from '../../components';
 
 import { players } from '../../constants';
+import { useLocalStorage } from '../../hooks';
 
 interface PlayersFieldProps {
   handleSetPlayers: (value: number) => void;
 }
 export const PlayersField: FC<PlayersFieldProps> = ({ handleSetPlayers }) => {
-  const [playersQuantity, setPlayersQuantity] = useState(localStorage.getItem('players') || '2');
+  const [playersQuantity, setPlayersQuantity] = useLocalStorage('players', '2');
 
   const handlePlayersChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedPlayers = event.target.value;
     setPlayersQuantity(selectedPlayers);
-    localStorage.setItem('players', selectedPlayers);
   };
 
   const handleApply = () => {
@@ -22,7 +22,6 @@ export const PlayersField: FC<PlayersFieldProps> = ({ handleSetPlayers }) => {
 
   const handleClear = () => {
     setPlayersQuantity('2');
-    localStorage.setItem('players', '2');
     handleSetPlayers(0);
   };
 
