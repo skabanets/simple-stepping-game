@@ -20,6 +20,12 @@ export const PlayersField: FC<PlayersFieldProps> = ({ handleSetPlayers }) => {
     handleSetPlayers(Number(playersQuantity));
   };
 
+  const handleClear = () => {
+    setPlayersQuantity('2');
+    localStorage.setItem('players', '2');
+    handleSetPlayers(0);
+  };
+
   return (
     <div className="flex flex-col gap-2">
       <label className="font-semibold">Chose number of players and press Apply</label>
@@ -36,8 +42,19 @@ export const PlayersField: FC<PlayersFieldProps> = ({ handleSetPlayers }) => {
             </option>
           ))}
         </select>
-        <Button type="button" className="w-1/3 apply-btn" onClick={handleApply}>
+        <Button
+          type="button"
+          className="w-1/3 players-btn bg-slate-400 hover:bg-slate-500"
+          onClick={handleApply}
+        >
           Apply
+        </Button>
+        <Button
+          type="button"
+          className="w-1/3 players-btn bg-red-400  hover:bg-red-500"
+          onClick={handleClear}
+        >
+          Сlear
         </Button>
       </div>
     </div>
