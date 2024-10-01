@@ -44,7 +44,7 @@ export const PlayersField: FC<PlayersFieldProps> = ({ handleSetPlayers }) => {
         </select>
         <Button
           type="button"
-          className="w-1/3 players-btn bg-slate-400 hover:bg-slate-500"
+          className="w-1/3 players-btn bg-green-500 hover:bg-green-600"
           onClick={handleApply}
         >
           Apply
