@@ -1,7 +1,8 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useRef } from 'react';
 import ReactDice, { ReactDiceRef } from 'react-dice-complete';
 
 import { Button } from '../../components';
+import { useLocalStorage } from '../../hooks';
 
 interface DiceProps {
   faceColor: string;
@@ -9,7 +10,8 @@ interface DiceProps {
   setDiceValue: (value: number) => void;
 }
 export const Dice: FC<DiceProps> = ({ faceColor, dotColor, setDiceValue }) => {
-  const [volume, setVolume] = useState(0.5);
+  const [diceValue] = useLocalStorage<number>('dice-value', 3);
+  const [volume, setVolume] = useLocalStorage<number>('volume', 0.5);
 
   const reactDice = useRef<ReactDiceRef>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -42,7 +44,7 @@ export const Dice: FC<DiceProps> = ({ faceColor, dotColor, setDiceValue }) => {
     <>
       <ReactDice
         disableIndividual
-        defaultRoll={3}
+        defaultRoll={diceValue}
         numDice={1}
         ref={reactDice}
         rollDone={rollDone}

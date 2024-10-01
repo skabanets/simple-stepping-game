@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
 import { DiceArea, GameArea, SettingsArea } from '../components';
+import { useLocalStorage } from '../hooks';
 
 export const App = () => {
-  const [image, setImage] = useState<string | null>(localStorage.getItem('game-area') || null);
-  const [diceValue, setDiceValue] = useState<number>(0);
+  const [image, setImage] = useLocalStorage<string | null>('game-area', null);
+  const [diceValue, setDiceValue] = useLocalStorage<number>('dice-value', 0);
+
   const [playersQuantity, setPlayersQuantity] = useState<number | null>(null);
 
   const handleSetPlayers = (value: number) => {

@@ -1,34 +1,15 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 
 import { Dice } from '../../components';
+import { useLocalStorage } from '../../hooks';
 
 interface DiceAreaProps {
   setDiceValue: (value: number) => void;
 }
 
 export const DiceArea: FC<DiceAreaProps> = ({ setDiceValue }) => {
-  const [faceColor, setFaceColor] = useState('#eb1818');
-  const [dotColor, setDotColor] = useState('#ffffff');
-
-  useEffect(() => {
-    const savedFaceColor = localStorage.getItem('faceColor');
-    const savedDotColor = localStorage.getItem('dotColor');
-
-    if (savedFaceColor) {
-      setFaceColor(savedFaceColor);
-    }
-    if (savedDotColor) {
-      setDotColor(savedDotColor);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('faceColor', faceColor);
-  }, [faceColor]);
-
-  useEffect(() => {
-    localStorage.setItem('dotColor', dotColor);
-  }, [dotColor]);
+  const [faceColor, setFaceColor] = useLocalStorage<string>('faceColor', '#eb1818');
+  const [dotColor, setDotColor] = useLocalStorage<string>('dotColor', '#ffffff');
 
   const handleFaceColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFaceColor(event.target.value);
